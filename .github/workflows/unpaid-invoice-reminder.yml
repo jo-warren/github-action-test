@@ -21,6 +21,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - run: echo ${{github.ref}}
       - name: Call endpoint send unpaid invoice reminders
         run: |
           curl --request POST \
