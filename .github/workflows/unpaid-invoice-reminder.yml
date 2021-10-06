@@ -6,8 +6,8 @@ name: unpaid-invoice-reminder
 on:
   # Triggers the workflow on push or pull request events but only for the staging branch
   schedule:
-    # Runs at 9:30AM PST every day (4:30PM UTC = 9:30AM PST)
-    - cron: '30 16 * * *'
+    # Change to '30 5,17 * * *' for prod (4:30PM UTC = 9:30AM PST)
+    - cron: '*/5 * * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,4 +24,4 @@ jobs:
       - name: Call endpoint send unpaid invoice reminders
         run: |
           curl --request POST \
-          --url 'http://localhost:3000/api/notifications/invoice' \
+          --url 'https://qa.peachy.codes/api/notifications/invoice' \
