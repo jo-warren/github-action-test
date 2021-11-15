@@ -21,9 +21,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Current Branch
       - run: echo ${{github.ref}}
-      - name: Call endpoint send unpaid invoice reminders
+      - name: Call PROD endpoint send unpaid invoice reminders
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          curl --request POST \
+          --url 'https://preprod.peachy.codes/api/notifications/invoice' \
+      - name: Call STAGING endpoint send unpaid invoice reminders
+        if: ${{ github.ref == 'refs/heads/staging' }}
+        run: |
+          curl --request POST \
+          --url 'https://staging.peachy.codes/api/notifications/invoice' \
+      - name: Call QA endpoint send unpaid invoice reminders
         run: |
           curl --request POST \
           --url 'https://qa.peachy.codes/api/notifications/invoice' \
