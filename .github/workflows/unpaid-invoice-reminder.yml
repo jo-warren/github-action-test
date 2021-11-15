@@ -23,16 +23,6 @@ jobs:
     steps:
       - name: Branch
       - run: echo ${{github.ref}}
-      - name: Call PROD endpoint send unpaid invoice reminders
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: |
-          curl --request POST \
-          --url 'https://preprod.peachy.codes/api/notifications/invoice' \
-      - name: Call STAGING endpoint send unpaid invoice reminders
-        if: ${{ github.ref == 'refs/heads/staging' }}
-        run: |
-          curl --request POST \
-          --url 'https://staging.peachy.codes/api/notifications/invoice' \
       - name: Call QA endpoint send unpaid invoice reminders
         if: ${{ github.ref == 'refs/heads/qa' }}
         run: |
