@@ -6,8 +6,8 @@ name: unpaid-invoice-reminder
 on:
   # Triggers the workflow on push or pull request events but only for the staging branch
   schedule:
-    # (4:30PM UTC = 9:30AM PST)
-    - cron: '30 4 * * *'
+    # (4:30PM UTC)
+    - cron: '30 16 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,8 +21,20 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Branch
       - run: echo ${{github.ref}}
-      - name: Call endpoint send unpaid invoice reminders
+      - name: Call PROD endpoint send unpaid invoice reminders
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           curl --request POST \
-          --url 'http://localhost:3000/api/notifications/invoice' \
+          --url 'https://preprod.peachy.codes/api/notifications/invoice' \
+      - name: Call STAGING endpoint send unpaid invoice reminders
+        if: ${{ github.ref == 'refs/heads/staging' }}
+        run: |
+          curl --request POST \
+          --url 'https://staging.peachy.codes/api/notifications/invoice' \
+      - name: Call QA endpoint send unpaid invoice reminders
+        if: ${{ github.ref == 'refs/heads/qa' }}
+        run: |
+          curl --request POST \
+          --url 'https://qa.peachy.codes/api/notifications/invoice' \
