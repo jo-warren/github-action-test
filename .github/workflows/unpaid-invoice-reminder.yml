@@ -6,7 +6,7 @@ name: unpaid-invoice-reminder
 on:
   # Triggers the workflow on push or pull request events but only for the staging branch
   schedule:
-    # Change to '30 5,17 * * *' for prod (4:30PM UTC = 9:30AM PST)
+    # (4:30PM UTC)
     - cron: '30 16 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
@@ -21,6 +21,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Current Branch
       - run: echo ${{github.ref}}
       - name: Call endpoint send unpaid invoice reminders
         run: |
