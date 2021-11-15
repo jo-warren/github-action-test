@@ -23,7 +23,3 @@ jobs:
     steps:
       - name: Branch
       - run: echo ${{github.ref}}
-      - name: Call QA endpoint send unpaid invoice reminders
-        run: |
-          curl --request POST \
-          --url 'https://qa.peachy.codes/api/notifications/invoice' \
